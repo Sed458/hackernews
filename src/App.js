@@ -11,7 +11,7 @@ const isSearched = (searchTerm) => (item) =>
   !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
 
@@ -46,8 +46,10 @@ class App extends Component {
   }
 
   onDismiss(id) {
-    const updatedList = this.state.list.filter(item => item.objectID !== id);
-    this.setState({ list: updatedList });
+    const updatedHits = this.state.result.hits.filter(item => item.objectID !== id);
+    this.setState({ 
+      result: {...this.state.result, hits: updatedHits } 
+    });
   }
 
   render() {
