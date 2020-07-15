@@ -12,10 +12,6 @@ const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
 
-const Loading = () => 
-  <div>Loading...</div>
-
-
 class App extends Component {
 
   constructor(props) {
@@ -118,11 +114,9 @@ class App extends Component {
           && <Table list={list} onDismiss={this.onDismiss} />
         }
         <div className="interactions">
-          {isLoading ? <Loading /> :
-            <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
-              More
-          </Button>
-          }
+          <ButtonWithLoading isLoading={isLoading} onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
+            More
+          </ButtonWithLoading>
         </div>
       </div >
     );
@@ -190,6 +184,14 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
+
+const Loading = () =>
+  <div>Loading...</div>
+
+const withLoading = (Component) => ({ isLoading, ...rest }) =>
+  isLoading ? <Loading /> : <Component {...rest} />
+
+const ButtonWithLoading = withLoading(Button);
 
 export default App;
 
